@@ -1,0 +1,80 @@
+.add-collection-card {
+    height: 100vh;
+}
+.add-collection-card .nav-bar-container {
+    height: 50px;
+    display: flex;
+    margin: 0px 144px;
+    justify-content: space-between;
+}
+.add-collection-card .nav-bar-container .logo {
+    line-height: 50px;
+    font-size: 36px;
+    font-weight: 600;
+}
+.add-collection-card .nav-bar-container .list-main-navbar {
+    width: 416px;
+    height: 50px;
+    display: flex;
+    justify-content: space-between;
+
+}
+.add-collection-card .nav-bar-container .list-main-navbar .navbar-item {
+    font-weight: 500;
+    font-size: 25px;
+}
+.add-collection-card .nav-bar-container .list-main-navbar .navbar-item i{
+    line-height: 50px;
+}
+.add-collection-card .nav-bar-container .list-main-navbar .navbar-item:hover{
+    color: rgb(141, 140, 140);
+}
+.add-collection-card .create-container {
+    width: 1152px;
+    height: 80%;
+    margin: auto;
+    display: flex;
+}
+.user-container {
+    width: 281px;
+    height: 600px;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    background-color: FFE500;
+    margin-top: 38px;
+    border: 1px solid rgba(159, 244, 178, 0.5);
+    box-sizing: border-box;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 20px;
+}
+.create-container .user-container .ava-user img{
+    width: 155px;
+    height: 149px;
+    margin:60.5px;
+    border-radius: 50%;
+}
+.add-collection-card .create-container .main-collection-card .title {
+    padding-top: 40px;
+    padding-left: 20px;
+    font-size: 20px;
+    width: 830px;
+    height: 161px;
+    background: #9FF4B2;
+    border-radius: 20px;
+
+}
+.add-collection-card .create-container .user-container p{
+    font-size: 24px;
+    padding: 20px;
+    
+}
+.add-collection-card .create-container .main-collection-card{
+    margin:39px 0px 0px 38px
+}
+
+.add-collection-card .create-container .main-collection-card .collection-item{
+    width: 218.04px;
+    height: 263.31px;
+    background: #FFE500;
+    box-shadow: 3px 5px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 50px;
+}
