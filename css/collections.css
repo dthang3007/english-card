@@ -1,5 +1,6 @@
 .add-collection-card {
     height: 100vh;
+    
 }
 .add-collection-card .nav-bar-container {
     height: 50px;
@@ -29,7 +30,7 @@
 .add-collection-card .nav-bar-container .list-main-navbar .navbar-item:hover{
     color: rgb(141, 140, 140);
 }
-.add-collection-card .create-container {
+.add-collection-card .create-collection-container {
     width: 1152px;
     height: 80%;
     margin: auto;
@@ -46,13 +47,13 @@
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
 }
-.create-container .user-container .ava-user img{
+.create-collection-container .user-container .ava-user img{
     width: 155px;
     height: 149px;
     margin:60.5px;
     border-radius: 50%;
 }
-.add-collection-card .create-container .main-collection-card .title {
+.add-collection-card .create-collection-container .main-collection-card .title {
     padding-top: 40px;
     padding-left: 20px;
     font-size: 20px;
@@ -62,19 +63,41 @@
     border-radius: 20px;
 
 }
-.add-collection-card .create-container .user-container p{
+.add-collection-card .create-collection-container .user-container p{
     font-size: 24px;
     padding: 20px;
     
 }
-.add-collection-card .create-container .main-collection-card{
+.add-collection-card .create-collection-container .main-collection-card{
     margin:39px 0px 0px 38px
 }
 
-.add-collection-card .create-container .main-collection-card .collection-item{
-    width: 218.04px;
-    height: 263.31px;
+.add-collection-card .create-collection-container .main-collection-card .collection-item{
+    width: 250px;
+    height: 263px;
     background: #FFE500;
     box-shadow: 3px 5px 4px rgba(0, 0, 0, 0.25);
     border-radius: 50px;
+    margin-top: 30px;
+    
+
+}
+.add-collection-card .create-collection-container .main-collection-card .collection-item img{
+    width:  250px ;
+    height: 226px;
+    border-radius: 0px 0px 50px 50px;
+    background-position: bottom;
+    background-repeat: no-repeat;
+}
+.add-collection-card .create-collection-container .main-collection-card .list-collections-card {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.add-collection-card .create-collection-container .main-collection-card .list-collections-card .collection-item p{
+    font-size: 34px;
+    text-align: center  ;
+}
+.add-collection-card .create-collection-container .main-collection-card .collection-item:hover{
+    background-color: blanchedalmond;
 }

@@ -1,0 +1,9 @@
+.wrapper{
+    display: flex;
+}
+.col{
+    margin-left:30px
+}
+.col-0{
+    margin-top: 30px;
+}

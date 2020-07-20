@@ -1,0 +1,11 @@
+.banner{
+    font-size: 30px;
+    display: flex;
+    align-items: center;
+}
+.navbar.navbar-dark{
+    padding-left: 50px;
+}
+.d-flex{
+    
+}
