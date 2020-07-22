@@ -1,0 +1,36 @@
+
+.register-container #register-form{
+    width: 400px;
+    height: 100vh;
+    background: #ffffff;
+    padding: 20px
+}
+#register-form .title{
+    text-align: center;
+    font-size: 39px;
+    color: #757575;
+    font-family: sans-serif;
+    padding-bottom: 20px;
+}
+#register-form .input-wrapper{
+    margin-bottom: 10px;
+}
+.name-wrapper .input-wrapper input{
+    width: 96%;
+}
+#register-form .name-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+
+#register-form{
+    width: 442px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.16);
+    border-radius: 16px;
+    padding: 40px;
+}
+
+.submit-wrapper #redirect-to-login:hover{
+    text-decoration: underline;
+}
