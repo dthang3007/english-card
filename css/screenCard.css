@@ -3,45 +3,18 @@
     background-color: D2FFFF;
     
 }
-.add-card .nav-bar-container {
-    height: 50px;
-    display: flex;
-    margin: 0px 144px;
-    justify-content: space-between;
-}
-.add-card .nav-bar-container .logo {
-    line-height: 50px;
-    font-size: 36px;
-    font-weight: 600;
-}
-.add-card .nav-bar-container .list-main-navbar {
-    width: 416px;
-    height: 50px;
-    display: flex;
-    justify-content: space-between;
 
-}
-.add-card .nav-bar-container .list-main-navbar .navbar-item {
-    font-weight: 500;
-    font-size: 25px;
-}
-.add-card .nav-bar-container .list-main-navbar .navbar-item i{
-    line-height: 50px;
-}
-.add-card .nav-bar-container .list-main-navbar .navbar-item:hover{
-    color: rgb(141, 140, 140);
-}
 .add-card .create-card {
     width: 1520px;
     margin: auto;
-    margin-top: 39px;
+    
     display:flex;
     justify-content: space-between;
 }
-.add-card .create-card .collection-card {
+.add-card .create-card .infor-collection-card {
     width: 350px;
     height: 738px;
-
+    margin-top:38px;
     background: #FFE500;
     border: 1px solid rgba(159, 244, 178, 0.5);
     box-sizing: border-box;
@@ -54,19 +27,19 @@
 
 .add-card .create-card .main-add-card {
     width:1000px;
-    
+    margin-top: 38px;
     background: #FFFFFF;
     box-shadow: inset 0px 4px 2px rgba(0, 0, 0, 0.1);
     border-radius: 20px;
     
 }
-.add-card .create-card .collection-card .image-collection-cover img {
+.add-card .create-card .infor-collection-card .image-collection-cover img {
     width: 275px;
     height: 271px;
     border-radius: 20px;
     margin: 35px;
 }
-.add-card .create-card .collection-card p {
+.add-card .create-card .infor-collection-card p {
     font-size: 25px;
     margin: 25px 0px 25px 28px;
     font-family: 'Epilogue', sans-serif;
@@ -108,7 +81,11 @@
 }
 .add-card .create-card .main-add-card .card .back-card p{
     font-size: 20px;
-    margin: 20px;
-   
+}
+.add-card .create-card .main-add-card .card .back-card .listNotes{
+    margin: 30px;
+}
+.add-card .create-card .main-add-card .card .back-card .listNotes >*{
+    margin-bottom:20px
 }
 
