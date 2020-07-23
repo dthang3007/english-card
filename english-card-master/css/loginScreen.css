@@ -47,6 +47,7 @@
     line-height: 50px;
     font-size: 36px;
     font-weight: 600;
+    color:white;
 }
 .nav-bar-container .list-main-navbar {
     width: 416px;
@@ -58,6 +59,7 @@
 .list-main-navbar .navbar-item {
     font-weight: 500;
     font-size: 25px;
+    color:white;
 }
 .list-main-navbar .navbar-item i{
     line-height: 50px;
@@ -66,16 +68,7 @@
     color: rgb(141, 140, 140);
 }
 
-nav{
-    background-color: #FFE500;
-}
-i{
-    color: black;
-    margin-right: 4px;
-}
-ul{
-    list-style: none;
-}
+
 #redirect-to-register:hover{
     text-decoration: underline;
 }

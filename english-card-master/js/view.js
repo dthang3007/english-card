@@ -2,7 +2,8 @@ const view = {};
 view.setActiveScreen = (screenName) => {
   switch (screenName) {
     case "collectionUserScreen":
-      document.getElementById("app").innerHTML = components.collectionUserScreen;
+      document.getElementById("app").innerHTML =
+        components.collectionUserScreen;
       model.loadCollectionCard();
 
       break;
@@ -22,7 +23,7 @@ view.setActiveScreen = (screenName) => {
         controller.login(loginInfo);
       });
       break;
-      case "registerScreen":
+    case "registerScreen":
       document.getElementById("app").innerHTML = components.registerScreen;
       const registerForm = document.getElementById("register-form");
       const btn = document.getElementById("redirect-to-login");
@@ -41,9 +42,9 @@ view.setActiveScreen = (screenName) => {
         controller.register(registerInfo);
       });
       break;
-      case "collectionUserScreen":
-        document.getElementById("app").innerHTML = components.collectionUserScreen;
-        view.showCurrentUserName()
+    case "homeScreen":
+      document.getElementById("app").innerHTML = components.homeScreen;
+      view.showCurrentUserName();
   }
 };
 view.addCollection = (collection) => {
@@ -56,10 +57,12 @@ view.addCollection = (collection) => {
   listCollection.appendChild = collectionWrapper;
 };
 
-view.setErrorMessage = (elementId,message) =>{
-  document.getElementById(elementId).innerText = message
-}
+view.setErrorMessage = (elementId, message) => {
+  document.getElementById(elementId).innerText = message;
+};
 
-view.showCurrentUserName = () =>{
-  document.querySelector('.current-user-name').innerText = model.currentUser.displayName
-}
+view.showCurrentUserName = () => {
+  document.querySelector(
+    ".navbar-item"
+  ).lastElementChild.innerHTML = ` <i class="fas fa-user-circle"></i>${model.currentUser.displayName}`;
+};

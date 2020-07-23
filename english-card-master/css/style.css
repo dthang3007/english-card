@@ -15,3 +15,14 @@
 .error{
     color:red
 }
+
+nav{
+    background-color: #4267B2;
+}
+i{
+    color: white;
+    margin-right: 4px;
+}
+ul{
+    list-style: none;
+}

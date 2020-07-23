@@ -19,7 +19,7 @@ window.onload = () => {
           displayName: user.displayName,
           email: user.email,
         };
-        view.setActiveScreen("collectionUserScreen");
+        view.setActiveScreen("homeScreen");
       }
     } else {
       view.setActiveScreen("loginScreen");

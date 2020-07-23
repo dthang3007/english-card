@@ -32,7 +32,7 @@ model.login = (email, password) => {
           displayName: user.user.displayName,
           email: user.user.email,
         };
-        view.setActiveScreen("collectionUserScreen");
+        view.setActiveScreen("homeScreen");
       } else {
         alert("Please verify your email first");
       }
