@@ -37,15 +37,15 @@ controller.check = async () => {
         controller.validateInfor(`errorContent`, [inforCollection.collectionName, "Please input Vocab"])]
 
     if (controller.allPassed(validateResults)) {
-        // if (model.createCard.length >= 4) {
+        if (model.createCard.length >= 4) {
             controller.validateInfor(`errorAmountCard`, [model.createCard.length >= 4, "Card at least 4"])
             await model.createDataCollection(inforCollection)
-        //     return true
-        // }
-        // else {
-        //     controller.validateInfor(`errorAmountCard`, [model.createCard.length >= 4, "Card at least 4"])
-        //     return false
-        // }
+            return true
+        }
+        else {
+            controller.validateInfor(`errorAmountCard`, [model.createCard.length >= 4, "Card at least 4"])
+            return false
+        }
     }
     console.log(model.createCard)
     return false

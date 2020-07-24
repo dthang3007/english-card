@@ -64,7 +64,7 @@ view.addCardUser = (card) => {
         <div class="main-vocab">
             <div class="vocab" style="font-size: 55px;">${card.vocab}</div>
             <div class="pronun" style="font-size: 30px;">${card.pronunciation}</div>
-            <button onclick="play('${card.sound})"><i class="fas fa-volume-up"></i></button>
+            <button id="btn${card.id}"><i class="fas fa-volume-up"></i></button>
             
         </div>
     </div>
@@ -75,8 +75,13 @@ view.addCardUser = (card) => {
             <h3>Example: </h3>
         </div>
     </div>`
+
     const listCard = document.querySelector('.main-add-card')
     listCard.appendChild(cardWrapper)
+    document.getElementById(`btn${card.id}`).addEventListener("click",()=>{
+        let file=`${card.sound}`
+        play(file)
+    })
 }
 view.showCards = () => {
     for (let oneCard of model.cardsUser) {
@@ -220,11 +225,11 @@ view.addFormAddCard = (id) => {
         let fileSound = filesSound[0]
         let inforCard = {
             imageVocab: fileImage,
-            vocab: "card.vocab.value",
+            vocab: card.vocab.value,
             sound: fileSound,
-            pronunciation: "card.pronun.value",
-            meaning: "card.meaning.value",
-            sameMeaning: "card.samemeaning.value",
+            pronunciation: card.pronun.value,
+            meaning: card.meaning.value,
+            sameMeaning: card.samemeaning.value,
             idCollection: " ",
             createdAt: new Date(),
         }
