@@ -72,6 +72,17 @@ model.upImage= async (fileImage)=>{
         link=''
         return link
     }
-
-
+}
+model.loadCardToEdit=async (inforCollection)=>{
+    let cards = await firebase.firestore().collection("cards").where("idCollection", '==', inforCollection.id).get()
+    let infor = await firebase.firestore().collection("collections").doc(inforCollection.id).get()
+    let data = utils.getDataFromDocs(cards.docs)
+    let dataInfor = utils.getDataFromDoc(infor)
+    model.currentCollection = dataInfor
+    model.cardsUser = data
+    view.showCollectionToEdit(inforCollection)
+    view.showCardsToEdit()
+}
+model.updateDataCard=(infor)=>{
+    console.log(infor)
 }

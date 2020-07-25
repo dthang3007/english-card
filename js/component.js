@@ -52,3 +52,18 @@ component.createCards=`    <div class="create-card-screen">
                 </div>
 </div>
 `
+component.editCardsScreen=`    <div class="edit-card-screen">
+<div class="edit-card-main">
+    <div class="infor-collection-card-edit">
+
+    </div>
+    <div class="main-edit-card">
+        <div class="card-wrapper">
+            
+        </div>
+        <button class="btn-add-card" id="button-add-card-edit" type="button"><i
+                class="fas fa-plus-circle"></i></button>
+    </div>
+</div>
+</div> 
+`

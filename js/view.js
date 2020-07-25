@@ -30,6 +30,9 @@ view.setActiveScreen = (screenName) => {
                 controller.check()
             })
             break
+        case 'editCardsScreen':
+            document.getElementById('app').innerHTML=component.editCardsScreen
+
     }
 }
 view.addCollectionUser = (collection) => {
@@ -103,13 +106,30 @@ view.showNotes = (note) => {
 }
 view.showInforCollection = (infor, number) => {
     const inforCollection = document.querySelector('.infor-collection-card')
-    inforCollection.innerHTML = `    
-    <div class="image-collection-cover">
-    <img src="${infor.imageCover}" alt="">
-    </div>
-    <p>Chủ đề: ${infor.collectionName}</p>
-    <p>Số thẻ:${number} </p>
-    <p>Của: ${infor.owner}</p>`
+    if(model.currentUser.email==infor.owner){
+        inforCollection.innerHTML = `    
+        <div class="image-collection-cover">
+        <img src="${infor.imageCover}" alt="">
+        </div>
+        <p>Chủ đề: ${infor.collectionName}</p>
+        <p>Số thẻ:${number} </p>
+        <p>Của: ${infor.owner}</p>
+        <button id="btnToQuizz" >Hoc bo the nay</button>
+        <button id="btnToEdit" >Chinh sua bo the</button>`
+    }else{
+        inforCollection.innerHTML = `    
+        <div class="image-collection-cover">
+        <img src="${infor.imageCover}" alt="">
+        </div>
+        <p>Chủ đề: ${infor.collectionName}</p>
+        <p>Số thẻ:${number} </p>
+        <p>Của: ${infor.owner}</p>
+        <button id="btnToQuizz">Hoc bo the nay</button>`
+    }
+    document.getElementById("btnToEdit").addEventListener("click",()=>{
+        view.setActiveScreen("editCardsScreen")
+        model.loadCardToEdit(infor)
+    })
 }
 view.showInforUser = (user) => {
     const inforUser = document.getElementById('inforUser')
@@ -249,6 +269,105 @@ view.addFormAddCard = (id) => {
         }
     }
 }
+view.addCardEdit=(card)=>{
 
+    let formEdit = document.createElement('form')
+    formEdit.id=`formEdit${card.id}`
+    formEdit.innerHTML = `
+    <div class="card">
+    <div class="font-card">
+        <div class="image-card">
+            <input type="file" name="imageCard" id="inputImageCardEdit">
+            <img src="${card.imageVocab}" alt="" id="imageCardEdit">
+            <div class="error" id='imageCollectionErrorEdit'></div>
+        </div>
+        <div class="main-vocab">
+            <div class="input-vocab">
+                <input type="text" name="vocab" placeholder="Add vocab" value="${card.vocab}">
+                <div class="error" id='vocabErrorEdit'></div>
+            </div>
+            <div class="pronuncitaion">
+                <div class="sound">
+                    <input type="file" name="sound">
+                    <i class="fas fa-volume-up"></i>
+                    <div class="error" id='soundErrorEdit'></div>
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" name="pronun" placeholder="Add pronun" value="${card.pronunciation}" >
+                    <div class="error" id="pronunErrorEdit"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="back-card">
+        <div class="input-wrapper">
+            <input type="text" name="meaning" placeholder="Meaning" value="${card.meaning}">
+            <div class="error" id='meaningErrorEdit'></div>
+        </div>
+        <div class="input-wrapper">
+            <input type="text" name="samemeaning" placeholder="Same meaning" value="${card.sameMeaning}">
+            <div class="error" id='sameMeaningErrorEdit'></div>
+        </div>
+        <div class="Example">
+            <h3 style="padding-left: 20px ;">Example</h3>
+            <input type="text" name="example" placeholder="Add Example">
+            <div class="error" id='exampleErrorEdit'></div>
+        </div>
+    </div>
+    <button id="btnEdit${card.id}" type="submit" > <i class="far fa-check-circle"></i></button>
+</div>`
+    const listCardToEdit = document.querySelector('.edit-card-screen .edit-card-main .main-edit-card .card-wrapper')
+    listCardToEdit .appendChild(formEdit)
+    document.getElementById(`btnEdit${card.id}`).addEventListener('click',(e)=>{    
+        e.preventDefault()
+        let cardUpdate = document.getElementById(`formEdit${card.id}`)
+        let filesImage = cardUpdate.imageCard.files
+        let fileImage = filesImage[0]
+        let filesSound = cardUpdate.sound.files
+        let fileSound = filesSound[0]
+        const dataEdit = {
+            vocab: cardUpdate.vocab.value,
+            pronunciation: cardUpdate.pronun.value,
+            meaning: cardUpdate.meaning.value,
+            sameMeaning: cardUpdate.samemeaning.value
+        }
+        if(fileImage){
+            dataEdit.imageVocab=filesImage
+        }
+        if(fileSound){
+            dataEdit.sound=fileSound
+        }
+        model.updateDataCard(dataEdit)
+    })
+}
+view.showCardsToEdit=()=>{
+    for(oneCard of model.cardsUser){
+        view.addCardEdit(oneCard)
+    }
+}
+view.showCollectionToEdit=(infor)=>{
+    let formCollectionEdit=document.querySelector(".infor-collection-card-edit")
+    formCollectionEdit.innerHTML=`
+        <form id="test" runat="server">
+            <div class="eidt-collection-card">
+                <div class="image-colection">
+                    <input type="file" name="imageCollectionEdit" id="collectionCardEdit">
+                    <img src="${infor.imageCover}" id="imageCollectionCardEdit" alt="">
+                    <div class='error' id="errorImageCollectionEdit"></div>
+                </div>
+                <div class="input-wrapper">
+                    <input type="text" placeholder="Content" name='content' value="${infor.collectionName}">
+                    <div class="error" id="errorContentEdit"></div>
+                </div>
+                <button class="btn-create" id="button-submit-collection-edit" type="submit"><i
+                        class="fas fa-check" style="color: white;"></i></button>
+                <div class="error" id="errorAmountCardEdit"></div>
+            </div>
+        </form>`
+        document.getElementById("test").addEventListener('submit', (e) => {
+            e.preventDefault()
+            // view.setActiveScreen("collectionUserScreen")
+        })
+}
 
 

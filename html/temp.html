@@ -9,132 +9,84 @@
     <link rel="stylesheet" href="../css/collections.css">
     <link rel="stylesheet" href="../css/screenCard.css">
     <link rel="stylesheet" href="../css/createCard.css">
+    <link rel="stylesheet" href="../css/editCardScreen.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Geo&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Epilogue&display=swap" rel="stylesheet">
 </head>
 
 <body>
-    <div class="create-card-screen">
-        <nav>
-            <div class="nav-bar-container">
-                <div class="logo">
-                    ECARD
-                </div>
-                <div class="list-main-navbar">
-                    <div class="navbar-item"><i class="fas fa-home"></i>Home</div>
-                    <div class="navbar-item"><i class="fas fa-plus"></i>Create</div>
-                    <div class="navbar-item"><i class="fas fa-user"></i>User</div>
-                </div>
-            </div>
-        </nav>
-        <form id="firebase-add">
-        <div class="main-create">
-                    <div class=create-collection-card>
+    <div class="edit-card-screen">
+        <div class="edit-card-main">
+            <div class="infor-collection-card-edit">
+                <form runat="server">
+                    <div class="eidt-collection-card">
                         <div class="image-colection">
-                            <input type="file" name="image-collection">
-                            <img src="../image/tải xuống.png" alt="">
-                            <div class='error'></div>
+                            <input type="file" name="imageCollectionEdit" id="collectionCardEdit">
+                            <img src="../image/tải xuống.png" id="imageCollectionCardEdit" alt="">
+                            <div class='error' id="errorImageCollectionEdit"></div>
                         </div>
                         <div class="input-wrapper">
-                            <input type="text" placeholder="Content">
-                            <div class="error"></div>
+                            <input type="text" placeholder="Content" name='content'>
+                            <div class="error" id="errorContentEdit"></div>
                         </div>
-                        <button class="btn-create" type="submit"><i class="fas fa-check" style="color: white;"></i></button>
+                        <button class="btn-create" id="button-submit-collection-edit" type="submit"><i
+                                class="fas fa-check" style="color: white;"></i></button>
+                        <div class="error" id="errorAmountCardEdit"></div>
                     </div>
-                    <div class="create-card-main">
-                        <div class="card-wrapper">
-                            <div class="card">
-                                <div class="font-card">
-                                    <div class="image-card">
-                                        <input type="file">
-                                        <img src="../image/tải xuống.png" alt="">
-                                    </div>
-                                    <div class="main-vocab">
-                                        <div class="input-vocab">
-                                            <input type="text" name="vocab" placeholder="Add vocab">
-                                            <div class="error"></div>
-                                        </div>
-                                        <div class="pronuncitaion">
-                                            <div class="sound">
-                                                <input type="file" name="sound">
-                                                <i class="fas fa-volume-up"></i>
-                                                <div class="error"></div>
-                                            </div>
-                                            <div class="input-wrapper">
-                                                <input type="text" name="pronun" placeholder="Add pronun">
-                                                <div class="error"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="back-card">
-                                    <div class="input-wrapper">
-                                        <input type="text" name="meaning" placeholder="Meaning">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="input-wrapper">
-                                        <input type="text" name="samemeaning" placeholder="Same meaning">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="Example" >
-                                        <input type="text" name=Example placeholder="Add Example">
-                                        <div class="error"></div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="font-card">
-                                    <div class="image-card">
-                                        <input type="file">
-                                        <img src="../image/tải xuống.png" alt="">
-                                    </div>
-                                    <div class="main-vocab">
-                                        <div class="input-vocab">
-                                            <input type="text" name="vocab" placeholder="Add vocab">
-                                            <div class="error"></div>
-                                        </div>
-                                        <div class="pronuncitaion">
-                                            <div class="sound">
-                                                <input type="file" name="sound">
-                                                <i class="fas fa-volume-up"></i>
-                                                <div class="error"></div>
-                                            </div>
-                                            <div class="input-wrapper">
-                                                <input type="text" name="pronun" placeholder="Add pronun">
-                                                <div class="error"></div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="back-card">
-                                    <div class="input-wrapper">
-                                        <input type="text" name="meaning" placeholder="Meaning">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="input-wrapper">
-                                        <input type="text" name="samemeaning" placeholder="Same meaning">
-                                        <div class="error"></div>
-                                    </div>
-                                    <div class="example" >
-                                        <h3 style="padding-left: 20px ;">Example</h3>
-                                        <input type="text" name=Example placeholder="Add Example">
-                                        <div class="error"></div>
-                                    </div>
-                                    
-                                    <button class="btn-add-example" type="button"><i class="fas fa-plus-circle"></i></button>
-                                </div>
-                            </div>
-                        </div>
- 
-                            <button class="btn-add-card" type="button"><i class="fas fa-plus-circle"></i></button>
-                        </div>
-                        
                 </form>
-
+            </div>
+            <div class="main-edit-card">
+                <div class="card-wrapper">
+                    <div class="card">
+                        <div class="font-card">
+                            <div class="image-card">
+                                <input type="file" name="imageCard" id="inputImageCardEdit">
+                                <img src="${card.imageVocab}" alt="" id="imageCardEdit">
+                                <div class="error" id='imageCollectionErrorEdit'></div>
+                            </div>
+                            <div class="main-vocab">
+                                <div class="input-vocab">
+                                    <input type="text" name="vocab" placeholder="Add vocab" value="${card.vocab}">
+                                    <div class="error" id='vocabErrorEdit'></div>
+                                </div>
+                                <div class="pronuncitaion">
+                                    <div class="sound">
+                                        <input type="file" name="sound">
+                                        <i class="fas fa-volume-up"></i>
+                                        <div class="error" id='soundErrorEdit'></div>
+                                    </div>
+                                    <div class="input-wrapper">
+                                        <input type="text" name="pronun" placeholder="Add pronun" value="${card.pronunciation}" >
+                                        <div class="error" id="pronunErrorEdit"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="back-card">
+                            <div class="input-wrapper">
+                                <input type="text" name="meaning" placeholder="Meaning" value="${card.meaning}">
+                                <div class="error" id='meaningErrorEdit'></div>
+                            </div>
+                            <div class="input-wrapper">
+                                <input type="text" name="samemeaning" placeholder="Same meaning" value="${card.sameMeaning}">
+                                <div class="error" id='sameMeaningErrorEdit'></div>
+                            </div>
+                            <div class="Example">
+                                <h3 style="padding-left: 20px ;">Example</h3>
+                                <input type="text" name="example" placeholder="Add Example">
+                                <div class="error" id='exampleErrorEdit'></div>
+                            </div>
+                        </div>
+                        <button > <i class="far fa-check-circle"></i></button>
+                    </div>
+                </div>
+                <button class="btn-add-card" id="button-add-card" type="button"><i
+                        class="fas fa-plus-circle"></i></button>
+            </div>
         </div>
     </div>
-<script src="../js/jquery.js"></script>
+    <script src="../js/jquery.js"></script>
 </body>
 
 </html>
