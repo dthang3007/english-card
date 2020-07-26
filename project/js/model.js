@@ -8,13 +8,16 @@ model.currentUser = {
     // card: "",
 
 }
+model.cardDelete=[]
 model.collectionsUser = undefined
 model.cardsUser = undefined
 model.currentCollection = undefined
 model.loadCollectionUser = async () => {
+    model.collectionsUser=[]
     let collections = await firebase.firestore().collection('collections').where("owner", "==", model.currentUser.email).orderBy("createdAt", "desc").get()
     let data = utils.getDataFromDocs(collections.docs)
     model.collectionsUser = data
+    console.log(data)
     model.currentUser.collection = model.collectionsUser.length
     view.showCollections()
     view.showInforUser(model.currentUser)
@@ -29,8 +32,10 @@ model.loadCardsUser = async (id) => {
     model.cardsUser = data
     view.showInforCollection(model.currentCollection, model.cardsUser.length)
     view.showCards()
+    console.log(model.cardsUser.length)
 }
 model.createDataCollection = async (infor) => {
+    console.log(infor)
     await firebase.firestore().collection("collections").add(infor)
     await model.createDataCard()
     view.setActiveScreen("collectionUserScreen")
@@ -39,6 +44,8 @@ model.createDataCard = async () => {
     let collections = await firebase.firestore().collection('collections').where("owner", "==", model.currentUser.email).orderBy("createdAt", "desc").get()
     let data = utils.getDataFromDocs(collections.docs)
     model.collectionsUser = data
+    console.log(model.collectionsUser[0].id)
+    console.log(model.collectionsUser[0])
     for (let oneCard of model.createCard) {
         let link
         link = await model.upload(oneCard.imageVocab)
@@ -48,6 +55,19 @@ model.createDataCard = async () => {
         oneCard.imageVocab = link
         oneCard.sound = sound
         oneCard.idCollection = model.collectionsUser[0].id
+        await firebase.firestore().collection("cards").add(oneCard)
+    }
+    model.createCard = []
+}
+model.createDataCardUpdate = async (id) => {
+    for (let oneCard of model.createCard) {
+        let link
+        link = await model.upload(oneCard.imageVocab)
+        let sound
+        sound = await model.upload(oneCard.sound)
+        oneCard.imageVocab = link
+        oneCard.sound = sound
+        oneCard.idCollection =id
         await firebase.firestore().collection("cards").add(oneCard)
     }
     model.createCard = []
@@ -83,8 +103,7 @@ model.loadCardToEdit = async (inforCollection) => {
     view.showCollectionToEdit(inforCollection)
     view.showCardsToEdit()
 }
-model.updateDataCard = async (infor,id) => {
-    console.log(infor.imageVocab)   
+model.updateDataCard = async (infor,id) => { 
     if(infor.imageVocab){
         let link
         link = await model.upload(infor.imageVocab)
@@ -97,6 +116,17 @@ model.updateDataCard = async (infor,id) => {
         infor.sound=sound
     }
     await firebase.firestore().collection('cards').doc(id).update(infor)
+
+}
+model.updateCollection=async(infor,id)=>{
+    if(infor.imageCover){
+        let link
+        link = await model.upload(infor.imageCover)
+        infor.imageCover=link
+    }
+    await firebase.firestore().collection('collections').doc(id).update(infor)
+    await model.createDataCardUpdate(id)
+    view.setActiveScreen("collectionUserScreen")
 }
 model.register = (firstName, lastName, email, password) => {
     firebase
@@ -137,4 +167,8 @@ model.register = (firstName, lastName, email, password) => {
         alert(err.message);
       });
   };
-  
+  model.deleteCollection=async(id)=>{
+    await firebase.firestore().collection('collections').doc(id).delete()
+    let cards = await firebase.firestore().collection("cards").where("idCollection", '==', id).get()
+    view.setActiveScreen("collectionUserScreen")
+  }
