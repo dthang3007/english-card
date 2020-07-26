@@ -231,20 +231,14 @@ view.setActiveScreen = (screenName) => {
                 }
             ]
             let cardQuizz=[...model.cardsUser]
-            let shuffledQuizz = shuffle(cardQuizz)
-
-            let cardQuizz2=[...model.cardsUser]
-       
+            let shuffledQuizz = shuffle(cardQuizz)       
             for(let i=0;i<model.cardsUser.length;i++){
                 for(let i=0;i<4;i++){
-                    let x=Math.floor(Math.random() * (4-i) )
-                    let answer
-                // let temp={
-                //         question: 
-                //         answers:       
-                // }
+                    let x=Math.floor(Math.random() *4 )
+                    shuffledQuizz.splice(x,1)
+                    
+                    let answer={text:`${cardQuizz[x]}`,correct:true}
                 }
-                
             }
             console.log("aaaa")
             break
