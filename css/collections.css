@@ -1,6 +1,7 @@
 .add-collection-card {
     height: 100vh;
     background-color: #D2FFFF;
+    padding-bottom:30px;
 }
 .add-collection-card .nav-bar-container {
     height: 50px;
@@ -31,24 +32,24 @@
     color: rgb(141, 140, 140);
 }
 .add-collection-card .create-collection-container {
-    width: 1520px;
+    width: auto;
     height: 80%;
     margin: auto;
     display: flex;
 }
 .user-container {
-    width: 350px;
-    height: 600px;
+    margin-left:3%;
+    width: 20%;
+    height: 117%;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     background-color: FFE500;
     margin-top: 38px;
     border: 1px solid rgba(159, 244, 178, 0.5);
     box-sizing: border-box;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
 }
 .create-collection-container .user-container .ava-user img{
-    width: 275px;
+    width: auto;
     height: 271px;
     margin:35px;
     border-radius: 50%;
@@ -104,3 +105,4 @@
 .add-collection-card .create-collection-container .main-collection-card .collection-item:hover{
     background-color: blanchedalmond;
 }
+

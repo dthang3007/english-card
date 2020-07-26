@@ -1,6 +1,5 @@
 const components={}
 components.collectionUserScreen=`
-
 <div class="add-collection-card">
         <div class="create-collection-container">
             <div class="user-container" id="inforUser">
@@ -29,7 +28,7 @@ components.cardUserScreen=`<div class="add-card">
 
 </div>
 </div>  `
-components.createCards=`    <div class="create-card-screen">
+components.createCards=`<div class="create-card-screen">
 <div class="main-create">
         <form id="firebase-add" runat="server">
             <div class=create-collection-card>
@@ -47,9 +46,14 @@ components.createCards=`    <div class="create-card-screen">
             </div>
         </form>    
             <div class="create-card-main">
+            <div></div>
                 <div class="card-wrapper">
                 </div>
-                    <button class="btn-add-card" id="button-add-card" type="button"><i class="fas fa-plus-circle"></i></button>
+                    <button class="btn-add-card" id="button-add-card" type="button">
+                      <i class="fas fa-plus-circle">
+                      <div id="text">Add a new card</div>
+                      </i>
+                    </button>                  
                 </div>
 </div>
 `
@@ -189,19 +193,5 @@ components.registerScreen = `
   </div>
 </div>
 </div>
+
 `
-components.quizzScreen=`<div class="container-quizz">
-<div id="question-container" class="hide">
-  <div id="question">Question</div>
-  <div id="answer-buttons" class="btn-grid">
-    <button class="btn">Answer 1</button>
-    <button class="btn">Answer 2</button>
-    <button class="btn">Answer 3</button>
-    <button class="btn">Answer 4</button>
-  </div>
-</div>
-<div class="controls">
-  <button id="start-btn" class="start-btn btn">Start</button>
-  <button id="next-btn" class="next-btn btn hide">Next</button>
-</div>
-</div>`
