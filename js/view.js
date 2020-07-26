@@ -2,7 +2,7 @@ const view = {}
 view.setActiveScreen = (screenName) => {
     switch (screenName) {
         case 'collectionUserScreen':
-            document.getElementById('app').innerHTML = component.collectionUserScreen
+            document.getElementById('app').innerHTML = components.collectionUserScreen
             let clickNav = document.getElementById('nav-create')
             clickNav.addEventListener('click', () => {
                 view.setActiveScreen("createCardScreen")
@@ -10,11 +10,11 @@ view.setActiveScreen = (screenName) => {
             model.loadCollectionUser()
             break
         case 'cardsUserScreen':
-            document.getElementById('app').innerHTML = component.cardUserScreen
+            document.getElementById('app').innerHTML = components.cardUserScreen
 
             break
         case 'createCardScreen':
-            document.getElementById('app').innerHTML = component.createCards
+            document.getElementById('app').innerHTML = components.createCards
             $("#collectionCard").change(function () {
                 readURL(this, "imageCollectionCard");
             })
@@ -31,10 +31,65 @@ view.setActiveScreen = (screenName) => {
             })
             break
         case 'editCardsScreen':
-            document.getElementById('app').innerHTML=component.editCardsScreen
+            document.getElementById('app').innerHTML = components.editCardsScreen
+            break
+        case "mainScreen":
+            document.getElementById("app").innerHTML = components.mainScreen;
+            view.showCurrentUserName();
 
+            break;
+        case "homeScreen":
+            document.getElementById("app").innerHTML = components.homeScreen
+            break;
+        case "loginScreen":
+            document.getElementById("app").innerHTML = components.loginScreen;
+            const loginForm = document.getElementById("form-login");
+            const loginBtn = document.getElementById("redirect-to-register");
+            const homeBtn = document.getElementById("redirect-to-home");
+            // homeBtn.addEventListener("click", function () {
+            //     view.setActiveScreen("homeScreen")
+            // });
+            loginBtn.addEventListener("click", function () {
+                view.setActiveScreen("registerScreen");
+            });
+            loginForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const loginInfo = {
+                    email: loginForm.email.value,
+                    password: loginForm.password.value,
+                };
+                controller.login(loginInfo);
+            });
+
+            break;
+        case "registerScreen":
+            document.getElementById("app").innerHTML = components.registerScreen;
+            const registerForm = document.getElementById("register-form");
+            const btn = document.getElementById("redirect-to-login");
+            btn.addEventListener("click", function () {
+                view.setActiveScreen("loginScreen");
+            });
+            // homeBtn.addEventListener("click", function () {
+            //   view.setActiveScreen("homeScreen")
+            // });
+            registerForm.addEventListener("submit", (e) => {
+                e.preventDefault();
+                const registerInfo = {
+                    firstName: registerForm.firstName.value,
+                    lastName: registerForm.lastName.value,
+                    email: registerForm.email.value,
+                    password: registerForm.password.value,
+                    confirmPassword: registerForm.confirmPassword.value,
+                };
+                controller.register(registerInfo);
+            });
+            break;
     }
 }
+view.setErrorMessage = (elementId, message) => {
+    document.getElementById(elementId).innerText = message;
+  };
+  
 view.addCollectionUser = (collection) => {
     const collectionWrapper = document.createElement('div')
     collectionWrapper.classList.add("collection-item")
@@ -81,8 +136,8 @@ view.addCardUser = (card) => {
 
     const listCard = document.querySelector('.main-add-card')
     listCard.appendChild(cardWrapper)
-    document.getElementById(`btn${card.id}`).addEventListener("click",()=>{
-        let file=`${card.sound}`
+    document.getElementById(`btn${card.id}`).addEventListener("click", () => {
+        let file = `${card.sound}`
         play(file)
     })
 }
@@ -106,7 +161,7 @@ view.showNotes = (note) => {
 }
 view.showInforCollection = (infor, number) => {
     const inforCollection = document.querySelector('.infor-collection-card')
-    if(model.currentUser.email==infor.owner){
+    if (model.currentUser.email == infor.owner) {
         inforCollection.innerHTML = `    
         <div class="image-collection-cover">
         <img src="${infor.imageCover}" alt="">
@@ -116,7 +171,7 @@ view.showInforCollection = (infor, number) => {
         <p>Của: ${infor.owner}</p>
         <button id="btnToQuizz" >Hoc bo the nay</button>
         <button id="btnToEdit" >Chinh sua bo the</button>`
-    }else{
+    } else {
         inforCollection.innerHTML = `    
         <div class="image-collection-cover">
         <img src="${infor.imageCover}" alt="">
@@ -126,7 +181,7 @@ view.showInforCollection = (infor, number) => {
         <p>Của: ${infor.owner}</p>
         <button id="btnToQuizz">Hoc bo the nay</button>`
     }
-    document.getElementById("btnToEdit").addEventListener("click",()=>{
+    document.getElementById("btnToEdit").addEventListener("click", () => {
         view.setActiveScreen("editCardsScreen")
         model.loadCardToEdit(infor)
     })
@@ -269,16 +324,16 @@ view.addFormAddCard = (id) => {
         }
     }
 }
-view.addCardEdit=(card)=>{
+view.addCardEdit = (card) => {
 
     let formEdit = document.createElement('form')
-    formEdit.id=`formEdit${card.id}`
+    formEdit.id = `formEdit${card.id}`
     formEdit.innerHTML = `
     <div class="card">
     <div class="font-card">
         <div class="image-card">
-            <input type="file" name="imageCard" id="inputImageCardEdit">
-            <img src="${card.imageVocab}" alt="" id="imageCardEdit">
+            <input type="file" name="imageCard" id="inputImageCardEdit${card.id}">
+            <img src="${card.imageVocab}" alt="" id="imageCardEdit${card.id}">
             <div class="error" id='imageCollectionErrorEdit'></div>
         </div>
         <div class="main-vocab">
@@ -315,10 +370,14 @@ view.addCardEdit=(card)=>{
         </div>
     </div>
     <button id="btnEdit${card.id}" type="submit" > <i class="far fa-check-circle"></i></button>
+    <button id="btnDelete${card.id}" type="submit" > <i class="far fa-times-circle"></i></button>
 </div>`
     const listCardToEdit = document.querySelector('.edit-card-screen .edit-card-main .main-edit-card .card-wrapper')
-    listCardToEdit .appendChild(formEdit)
-    document.getElementById(`btnEdit${card.id}`).addEventListener('click',(e)=>{    
+    listCardToEdit.appendChild(formEdit)
+    $(`#inputImageCardEdit${card.id}`).change(function () {
+        readURL(this, `imageCardEdit${card.id}`);
+    })
+    document.getElementById(`formEdit${card.id}`).addEventListener('submit', (e) => {
         e.preventDefault()
         let cardUpdate = document.getElementById(`formEdit${card.id}`)
         let filesImage = cardUpdate.imageCard.files
@@ -331,23 +390,23 @@ view.addCardEdit=(card)=>{
             meaning: cardUpdate.meaning.value,
             sameMeaning: cardUpdate.samemeaning.value
         }
-        if(fileImage){
-            dataEdit.imageVocab=filesImage
+        if (fileImage) {
+            dataEdit.imageVocab = fileImage
         }
-        if(fileSound){
-            dataEdit.sound=fileSound
+        if (fileSound) {
+            dataEdit.sound = fileSound
         }
-        model.updateDataCard(dataEdit)
+        model.updateDataCard(dataEdit, card.id)
     })
 }
-view.showCardsToEdit=()=>{
-    for(oneCard of model.cardsUser){
+view.showCardsToEdit = () => {
+    for (oneCard of model.cardsUser) {
         view.addCardEdit(oneCard)
     }
 }
-view.showCollectionToEdit=(infor)=>{
-    let formCollectionEdit=document.querySelector(".infor-collection-card-edit")
-    formCollectionEdit.innerHTML=`
+view.showCollectionToEdit = (infor) => {
+    let formCollectionEdit = document.querySelector(".infor-collection-card-edit")
+    formCollectionEdit.innerHTML = `
         <form id="test" runat="server">
             <div class="eidt-collection-card">
                 <div class="image-colection">
@@ -364,10 +423,10 @@ view.showCollectionToEdit=(infor)=>{
                 <div class="error" id="errorAmountCardEdit"></div>
             </div>
         </form>`
-        document.getElementById("test").addEventListener('submit', (e) => {
-            e.preventDefault()
-            // view.setActiveScreen("collectionUserScreen")
-        })
+    document.getElementById("test").addEventListener('submit', (e) => {
+        e.preventDefault()
+        // view.setActiveScreen("collectionUserScreen")
+    })
 }
 
 

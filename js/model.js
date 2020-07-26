@@ -43,14 +43,14 @@ model.createDataCard = async () => {
         let link
         link = await model.upload(oneCard.imageVocab)
         let sound
-        sound =await model.upload(oneCard.sound)
+        sound = await model.upload(oneCard.sound)
         console.log(link)
-        oneCard.imageVocab=link
-        oneCard.sound=sound
+        oneCard.imageVocab = link
+        oneCard.sound = sound
         oneCard.idCollection = model.collectionsUser[0].id
         await firebase.firestore().collection("cards").add(oneCard)
     }
-    model.createCard=[]
+    model.createCard = []
 }
 model.upload = async (file) => {
     let fileName = file.name
@@ -63,17 +63,17 @@ model.upload = async (file) => {
 model.getFileUrl = (fileRef) => {
     return `https://firebasestorage.googleapis.com/v0/b/${fileRef.bucket}/o/${encodeURIComponent(fileRef.fullPath)}?alt=media`
 }
-model.upImage= async (fileImage)=>{
+model.upImage = async (fileImage) => {
     let link
-    if(fileImage){
+    if (fileImage) {
         link = await model.upload(fileImage)
         return link
-    }else{
-        link=''
+    } else {
+        link = ''
         return link
     }
 }
-model.loadCardToEdit=async (inforCollection)=>{
+model.loadCardToEdit = async (inforCollection) => {
     let cards = await firebase.firestore().collection("cards").where("idCollection", '==', inforCollection.id).get()
     let infor = await firebase.firestore().collection("collections").doc(inforCollection.id).get()
     let data = utils.getDataFromDocs(cards.docs)
@@ -83,6 +83,57 @@ model.loadCardToEdit=async (inforCollection)=>{
     view.showCollectionToEdit(inforCollection)
     view.showCardsToEdit()
 }
-model.updateDataCard=(infor)=>{
-    console.log(infor)
+model.updateDataCard = async (infor,id) => {
+    console.log(infor.imageVocab)   
+    if(infor.imageVocab){
+        let link
+        link = await model.upload(infor.imageVocab)
+        infor.imageVocab=link
+        console.log(infor.imageVocab)
+    }
+    if(infor.sound){
+        let sound
+        sound = await model.upload(infor.sound)
+        infor.sound=sound
+    }
+    await firebase.firestore().collection('cards').doc(id).update(infor)
 }
+model.register = (firstName, lastName, email, password) => {
+    firebase
+      .auth()
+      .createUserWithEmailAndPassword(email, password)
+      .then((user) => {
+        console.log(user);
+        firebase.auth().currentUser.sendEmailVerification();
+        firebase.auth().currentUser.updateProfile({
+          displayName: firstName + " " + lastName,
+        });
+        alert('Register success, please check your email <(")');
+        view.setActiveScreen("loginScreen");
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+  
+  model.login = (email, password) => {
+    firebase
+      .auth()
+      .signInWithEmailAndPassword(email, password)
+      .then((user) => {
+        console.log(user);
+        if (user.user.emailVerified) {
+        //   model.currentUser = {
+        //     displayName: user.user.displayName,
+        //     email: user.user.email,
+        //   };
+        //   view.setActiveScreen("collectionUserScreen");
+        } else {
+          alert("Please verify your email first");
+        }
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
+  
