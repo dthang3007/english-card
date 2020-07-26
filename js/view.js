@@ -5,7 +5,32 @@ view.setActiveScreen = (screenName) => {
             document.getElementById('app').innerHTML = components.collectionUserScreen
             let clickNav = document.getElementById('nav-create')
             clickNav.addEventListener('click', () => {
-                view.setActiveScreen("createCardScreen")
+                if (model.currentUser) {
+                    view.setActiveScreen("createCardScreen")
+                } else {
+                    view.setActiveScreen("loginScreen")
+                }
+            })
+
+            document.getElementById("name-user").innerHTML = ` 
+            <i class="fas fa-user"></i>                 
+          <li class="dropdown">
+            <div class="dropbtn">${model.currentUser.displayName}</div>
+            <div class="dropdown-content">
+              <button type="click" id="log-out">Log out</button>
+              <button type="click" id="showCollectionOfUser">Collections</button>
+            </div>
+          </li>`
+            document.getElementById('log-out').addEventListener('click', () => {
+                firebase.auth().signOut()
+                model.currentUser = ""
+                document.getElementById("name-user").innerHTML = `<i class="fas fa-user"></i>User`
+            })
+            document.getElementById("showCollectionOfUser").addEventListener('click', () => {
+                view.setActiveScreen("collectionUserScreen")
+            })
+            document.getElementById("name-user").addEventListener("click", () => {
+                view.setActiveScreen("loginScreen")
             })
             model.loadCollectionUser()
             break
@@ -32,6 +57,13 @@ view.setActiveScreen = (screenName) => {
             break
         case 'editCardsScreen':
             document.getElementById('app').innerHTML = components.editCardsScreen
+            let id1 = 0
+            document.getElementById('button-add-card-edit').addEventListener('click', () => {
+                if (view.addFormAddCard(id1)) {
+                    id1++
+                }
+                console.log(id1)
+            })
             break
         case "mainScreen":
             document.getElementById("app").innerHTML = components.mainScreen;
@@ -84,12 +116,145 @@ view.setActiveScreen = (screenName) => {
                 controller.register(registerInfo);
             });
             break;
+        case "quizzScreen":
+            document.getElementById("app").innerHTML = components.quizzScreen;
+            const startButton = document.getElementById('start-btn')
+            const nextButton = document.getElementById('next-btn')
+            const questionContainerElement = document.getElementById('question-container')
+            const questionElement = document.getElementById('question')
+            const answerButtonsElement = document.getElementById('answer-buttons')
+            
+            let shuffledQuestions, currentQuestionIndex
+            console.dir(startButton)
+            startButton.addEventListener('click', startGame)
+            nextButton.addEventListener('click', () => {
+                currentQuestionIndex++
+                setNextQuestion()
+            })
+            
+            function startGame() {
+                startButton.classList.add('hide')
+                shuffledQuestions = questions.sort(() => Math.random() - .5)
+                currentQuestionIndex = 0
+                questionContainerElement.classList.remove('hide')
+                setNextQuestion()
+            }
+            
+            function setNextQuestion() {
+                resetState()
+                showQuestion(shuffledQuestions[currentQuestionIndex])
+            }
+            
+            function showQuestion(question) {
+                questionElement.innerText = question.question
+                question.answers.forEach(answer => {
+                    const button = document.createElement('button')
+                    button.innerText = answer.text
+                    button.classList.add('btn')
+                    if (answer.correct) {
+                        button.dataset.correct = answer.correct
+                    }
+                    button.addEventListener('click', selectAnswer)
+                    answerButtonsElement.appendChild(button)
+                })
+            }
+            
+            function resetState() {
+                clearStatusClass(document.body)
+                nextButton.classList.add('hide')
+                while (answerButtonsElement.firstChild) {
+                    answerButtonsElement.removeChild(answerButtonsElement.firstChild)
+                }
+            }
+            
+            function selectAnswer(e) {
+                const selectedButton = e.target
+                const correct = selectedButton.dataset.correct
+                setStatusClass(document.body, correct)
+                Array.from(answerButtonsElement.children).forEach(button => {
+                    setStatusClass(button, button.dataset.correct)
+                })
+                if (shuffledQuestions.length > currentQuestionIndex + 1) {
+                    nextButton.classList.remove('hide')
+                } else {
+                    startButton.innerText = 'Restart'
+                    startButton.classList.remove('hide')
+                }
+            }
+            
+            function setStatusClass(element, correct) {
+                clearStatusClass(element)
+                if (correct) {
+                    element.classList.add('correct')
+                } else {
+                    element.classList.add('wrong')
+                }
+            }
+            
+            function clearStatusClass(element) {
+                element.classList.remove('correct')
+                element.classList.remove('wrong')
+            }
+            
+            let questions = [
+                {
+                    question: 'What is 2 + 2?',
+                    answers: [
+                        { text: '4', correct: true },
+                        { text: '22', correct: false }
+                    ]
+                },
+                {
+                    question: 'Who is the best YouTuber?',
+                    answers: [
+                        { text: 'Web Dev Simplified', correct: true },
+                        { text: 'Traversy Media', correct: true },
+                        { text: 'Dev Ed', correct: true },
+                        { text: 'Fun Fun Function', correct: true }
+                    ]
+                },
+                {
+                    question: 'Is web development fun?',
+                    answers: [
+                        { text: 'Kinda', correct: false },
+                        { text: 'YES!!!', correct: true },
+                        { text: 'Um no', correct: false },
+                        { text: 'IDK', correct: false }
+                    ]
+                },
+                {
+                    question: 'What is 4 * 2?',
+                    answers: [
+                        { text: '6', correct: false },
+                        { text: '8', correct: true }
+                    ]
+                }
+            ]
+            let cardQuizz=[...model.cardsUser]
+            let shuffledQuizz = shuffle(cardQuizz)
+
+            let cardQuizz2=[...model.cardsUser]
+       
+            for(let i=0;i<model.cardsUser.length;i++){
+                for(let i=0;i<4;i++){
+                    let x=Math.floor(Math.random() * (4-i) )
+                    let answer
+                // let temp={
+                //         question: 
+                //         answers:       
+                // }
+                }
+                
+            }
+            console.log("aaaa")
+            break
+
     }
 }
 view.setErrorMessage = (elementId, message) => {
     document.getElementById(elementId).innerText = message;
-  };
-  
+};
+
 view.addCollectionUser = (collection) => {
     const collectionWrapper = document.createElement('div')
     collectionWrapper.classList.add("collection-item")
@@ -170,7 +335,8 @@ view.showInforCollection = (infor, number) => {
         <p>Số thẻ:${number} </p>
         <p>Của: ${infor.owner}</p>
         <button id="btnToQuizz" >Hoc bo the nay</button>
-        <button id="btnToEdit" >Chinh sua bo the</button>`
+        <button id="btnToEdit" >Chinh sua bo the</button>
+        <button id="btnToDelete" >Xoa bo the</button>`
     } else {
         inforCollection.innerHTML = `    
         <div class="image-collection-cover">
@@ -183,6 +349,14 @@ view.showInforCollection = (infor, number) => {
     }
     document.getElementById("btnToEdit").addEventListener("click", () => {
         view.setActiveScreen("editCardsScreen")
+        model.loadCardToEdit(infor)
+    })
+    document.getElementById("btnToDelete").addEventListener("click", () => {
+        console.log(infor.id)
+        model.deleteCollection(infor.id)
+    })
+    document.getElementById("btnToQuizz").addEventListener("click", () => {
+        view.setActiveScreen("quizzScreen")
         model.loadCardToEdit(infor)
     })
 }
@@ -300,11 +474,11 @@ view.addFormAddCard = (id) => {
         let fileSound = filesSound[0]
         let inforCard = {
             imageVocab: fileImage,
-            vocab: card.vocab.value,
+            vocab: "card.vocab.value",
             sound: fileSound,
-            pronunciation: card.pronun.value,
-            meaning: card.meaning.value,
-            sameMeaning: card.samemeaning.value,
+            pronunciation: "card.pronun.value",
+            meaning: "card.meaning.value",
+            sameMeaning: "card.samemeaning.value",
             idCollection: " ",
             createdAt: new Date(),
         }
@@ -377,6 +551,10 @@ view.addCardEdit = (card) => {
     $(`#inputImageCardEdit${card.id}`).change(function () {
         readURL(this, `imageCardEdit${card.id}`);
     })
+    document.getElementById(`btnDelete${card.id}`).addEventListener('click', () => {
+        document.getElementById(`formEdit${card.id}`).innerHTML = ''
+        model.deleteCard(card.id)
+    })
     document.getElementById(`formEdit${card.id}`).addEventListener('submit', (e) => {
         e.preventDefault()
         let cardUpdate = document.getElementById(`formEdit${card.id}`)
@@ -407,7 +585,7 @@ view.showCardsToEdit = () => {
 view.showCollectionToEdit = (infor) => {
     let formCollectionEdit = document.querySelector(".infor-collection-card-edit")
     formCollectionEdit.innerHTML = `
-        <form id="test" runat="server">
+        <form id="collectionUpdate${infor.id}" runat="server">
             <div class="eidt-collection-card">
                 <div class="image-colection">
                     <input type="file" name="imageCollectionEdit" id="collectionCardEdit">
@@ -416,17 +594,32 @@ view.showCollectionToEdit = (infor) => {
                 </div>
                 <div class="input-wrapper">
                     <input type="text" placeholder="Content" name='content' value="${infor.collectionName}">
-                    <div class="error" id="errorContentEdit"></div>
+                    <div class="error" id="errorContentEdit${infor.id}"></div>
                 </div>
                 <button class="btn-create" id="button-submit-collection-edit" type="submit"><i
                         class="fas fa-check" style="color: white;"></i></button>
                 <div class="error" id="errorAmountCardEdit"></div>
             </div>
         </form>`
-    document.getElementById("test").addEventListener('submit', (e) => {
+    document.getElementById(`collectionUpdate${infor.id}`).addEventListener('submit', (e) => {
         e.preventDefault()
+        let collection = document.getElementById(`collectionUpdate${infor.id}`)
+        let files = collection.imageCollectionEdit.files
+        let file = files[0]
+        let inforUpdate = {
+            collectionName: collection.content.value,
+        }
+        if (file) {
+            inforUpdate.imageCover = file
+        }
+        model.updateCollection(inforUpdate, infor.id)
+
         // view.setActiveScreen("collectionUserScreen")
     })
 }
 
-
+view.showCurrentUserName = () => {
+    document.getElementById(
+        ".current-user"
+    ).innerHTML = `<i class="fas fa-user-circle"></i>${model.currentUser.displayName}`;
+};

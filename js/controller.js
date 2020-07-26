@@ -29,12 +29,12 @@ controller.check = async () => {
     let inforCollection = {
         imageCover: link,
         collectionName: collection.content.value,
-        owner: "pdthang.cva@gmail.com",
+        owner: model.currentUser.email,
         createdAt: new Date()
     }
     let validateResults = [
         controller.validateInfor(`errorImageCollection`, [inforCollection.imageCover, "Please input image"]),
-        controller.validateInfor(`errorContent`, [inforCollection.collectionName, "Please input Vocab"])]
+        controller.validateInfor(`errorContent`, [inforCollection.collectionName, "Please input content"])]
 
     if (controller.allPassed(validateResults)) {
         if (model.createCard.length >= 4) {
@@ -47,7 +47,7 @@ controller.check = async () => {
             return false
         }
     }
-    console.log(model.createCard)
+
     return false
 }
 controller.checkCard = (infor, id) => {
@@ -146,4 +146,3 @@ controller.validateEmail = (email) => {
       model.login(loginInfo.email, loginInfo.password);
     }
   };
-  
