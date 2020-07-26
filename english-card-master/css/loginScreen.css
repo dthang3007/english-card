@@ -3,6 +3,11 @@
     margin: 0;
     padding: 0;
 }
+#app .login{
+    background: url(../image/flock-of-birds-917494.jpg);
+    height: 100vh;
+    background: cover;
+}
 #form-login{
     width: 442px;
     background: #FFFFFF;
@@ -36,6 +41,7 @@
 
 .container{
     margin-bottom: 80px;
+    
 }
 .container .nav-bar-container{
     height: 50px;

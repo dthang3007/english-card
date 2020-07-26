@@ -1,4 +1,8 @@
-
+#app .register{
+    background: url(../image/flock-of-birds-917494.jpg);
+    height: 100vh;
+    background: cover;
+}
 .register-container #register-form{
     width: 400px;
     height: 100vh;

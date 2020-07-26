@@ -1,16 +1,22 @@
 const view = {};
 view.setActiveScreen = (screenName) => {
   switch (screenName) {
-    case "collectionUserScreen":
-      document.getElementById("app").innerHTML =
-        components.collectionUserScreen;
-      model.loadCollectionCard();
+    case "mainScreen":
+      document.getElementById("app").innerHTML = components.mainScreen;
+      view.showCurrentUserName();
 
+      break;
+    case "homeScreen":
+      document.getElementById("app").innerHTML = components.homeScreen
       break;
     case "loginScreen":
       document.getElementById("app").innerHTML = components.loginScreen;
       const loginForm = document.getElementById("form-login");
       const loginBtn = document.getElementById("redirect-to-register");
+      const homeBtn = document.getElementById("redirect-to-home");
+      homeBtn.addEventListener("click", function () {
+        view.setActiveScreen("homeScreen")
+      });
       loginBtn.addEventListener("click", function () {
         view.setActiveScreen("registerScreen");
       });
@@ -22,6 +28,7 @@ view.setActiveScreen = (screenName) => {
         };
         controller.login(loginInfo);
       });
+  
       break;
     case "registerScreen":
       document.getElementById("app").innerHTML = components.registerScreen;
@@ -29,6 +36,9 @@ view.setActiveScreen = (screenName) => {
       const btn = document.getElementById("redirect-to-login");
       btn.addEventListener("click", function () {
         view.setActiveScreen("loginScreen");
+      });
+      homeBtn.addEventListener("click", function () {
+        view.setActiveScreen("homeScreen")
       });
       registerForm.addEventListener("submit", (e) => {
         e.preventDefault();
@@ -42,9 +52,7 @@ view.setActiveScreen = (screenName) => {
         controller.register(registerInfo);
       });
       break;
-    case "homeScreen":
-      document.getElementById("app").innerHTML = components.homeScreen;
-      view.showCurrentUserName();
+    
   }
 };
 view.addCollection = (collection) => {
@@ -63,6 +71,6 @@ view.setErrorMessage = (elementId, message) => {
 
 view.showCurrentUserName = () => {
   document.querySelector(
-    ".navbar-item"
-  ).lastElementChild.innerHTML = ` <i class="fas fa-user-circle"></i>${model.currentUser.displayName}`;
+    ".current-user"
+  ).innerHTML = `<i class="fas fa-user-circle"></i>${model.currentUser.displayName}`;
 };
