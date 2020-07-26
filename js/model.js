@@ -1,11 +1,11 @@
 const model = {}
 model.createCard = []
 model.currentUser = {
-    email: "pdthang.cva@gmail.com",
-    displayName: "Pham Duc Thang",
-    photoUrl: "https://i.pinimg.com/originals/8e/34/e3/8e34e3e4a570228fecaf7ce3c81328f0.jpg",
-    collection: "",
-    card: "",
+    // email: "pdthang.cva@gmail.com",
+    // displayName: "Pham Duc Thang",
+    // photoUrl: "https://i.pinimg.com/originals/8e/34/e3/8e34e3e4a570228fecaf7ce3c81328f0.jpg",
+    // collection: "",
+    // card: "",
 
 }
 model.collectionsUser = undefined
@@ -106,6 +106,7 @@ model.register = (firstName, lastName, email, password) => {
         console.log(user);
         firebase.auth().currentUser.sendEmailVerification();
         firebase.auth().currentUser.updateProfile({
+            photoUrl: "https://i.pinimg.com/originals/8e/34/e3/8e34e3e4a570228fecaf7ce3c81328f0.jpg",
           displayName: firstName + " " + lastName,
         });
         alert('Register success, please check your email <(")');
