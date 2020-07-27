@@ -4,11 +4,12 @@
     padding: 0;
 }
 #app .login{
-    background: url(../image/flock-of-birds-917494.jpg);
+    background: url(../image/flock-of-birds-917495.jpg);
     height: 100vh;
-    background: cover;
+    background-size: cover;
 }
 #form-login{
+    margin-top: 90px;
     width: 442px;
     background: #FFFFFF;
     box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.16);
